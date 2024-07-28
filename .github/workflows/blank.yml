@@ -1,0 +1,20 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+
+    steps:
+    - run: git config --system core.longpaths true
+      if: runner.os == 'Windows'
