@@ -12,23 +12,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [windows-latest, macos-latest]
 
 
     steps:
-      - name: Write release version (non-Windows)
-        if: matrix.os != 'windows-latest'
-        run: |
-          VERSION="::add-mask::${{vars.TEST_WINDOWS}}"
-          echo "::add-mask::$VERSION"
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-      - name: Write release version (Windows)
-        if: matrix.os == 'windows-latest'
-        run: |
-          $VERSION = "::add-mask::${{vars.TEST_WINDOWS}}"
-          echo "::add-mask::$VERSION"
-          echo "VERSION=$VERSION" >> $env:GITHUB_ENV
-      - name: Use that secret output (protected by a mask)
-        if: matrix.os != 'windows-latest'
-        run: |
-          echo "the secret number is ${VERSION}"
+      - run: gh variable get "TEST_WINDOWS"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Write release version (non-Windows)
+      #   if: matrix.os != 'windows-latest'
+      #   run: |
+      #     VERSION="::add-mask::${{vars.TEST_WINDOWS}}"
+      #     echo "::add-mask::$VERSION"
+      #     echo "VERSION=$VERSION" >> $GITHUB_ENV
+      # - name: Write release version (Windows)
+      #   if: matrix.os == 'windows-latest'
+      #   run: |
+      #     $VERSION = "::add-mask::${{vars.TEST_WINDOWS}}"
+      #     echo "::add-mask::$VERSION"
+      #     echo "VERSION=$VERSION" >> $env:GITHUB_ENV
+      # - name: Use that secret output (protected by a mask)
+      #   if: matrix.os != 'windows-latest'
+      #   run: |
+      #     echo "the secret number is ${VERSION}"
