@@ -19,7 +19,7 @@ jobs:
       - name: Write release version (non-Windows)
         if: matrix.os != 'windows-latest'
         run: |
-          VERSION=$((TEST_WINDOWS))
+          VERSION=$TEST_WINDOWS
           echo "::add-mask::$VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Write release version (Windows)
