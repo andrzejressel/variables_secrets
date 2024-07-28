@@ -16,7 +16,7 @@ jobs:
 
 
     steps:
-      - run: gh variable get "TEST_WINDOWS"
+      - run: gh variable get "TEST_WINDOWS" -R andrzejressel/variables_secrets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Write release version (non-Windows)
